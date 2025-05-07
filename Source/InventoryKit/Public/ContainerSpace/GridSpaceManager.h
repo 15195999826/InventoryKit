@@ -22,8 +22,11 @@ private:
     
     // 网格高度
     int32 GridHeight;
-    
-    // 槽位状态数组 -- 0表示可用，1表示被占用 Todo: 其他各种概念视情况添加
+
+    /**
+     * 槽位状态数组 -- 0表示可用，1表示被占用 Todo: 其他各种概念视情况添加
+     * 只通过持有者的Add or Remove 函数进行更新
+     */
     TArray<uint8> SlotFlags;
     
 public:
@@ -37,6 +40,9 @@ public:
     virtual void Initialize(const FContainerSpaceConfig& Config) override;
     virtual int32 GetCapacity() const override;
     virtual bool IsValidSlotIndex(int32 SlotIndex) const override;
+    virtual int32 GetSlotIndexByTag(const FGameplayTag& SlotTag) const override;
+    virtual int32 GetSlotIndexByXY(int32 X, int32 Y) const override;
+    virtual void UpdateSlotState(int32 SlotIndex, uint8 Flag) override;
     //~ End UContainerSpaceManager Interface
     
     /**
@@ -64,28 +70,4 @@ public:
      * @param OutY 输出参数，Y坐标
      */
     void IndexToCoordinate(int32 Index, int32& OutX, int32& OutY) const;
-    
-    /**
-     * 设置槽位状态
-     * 
-     * @param SlotIndex 槽位索引
-     * @param Flags 状态标志
-     */
-    void SetSlotFlags(int32 SlotIndex, uint8 Flags);
-    
-    /**
-     * 设置槽位锁定状态
-     * 
-     * @param SlotIndex 槽位索引
-     * @param bLocked 是否锁定
-     */
-    void SetSlotLocked(int32 SlotIndex, bool bLocked);
-    
-    /**
-     * 获取槽位标志
-     * 
-     * @param SlotIndex 槽位索引
-     * @return 槽位标志
-     */
-    uint8 GetSlotFlags(int32 SlotIndex) const;
 };

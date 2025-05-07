@@ -71,7 +71,7 @@ void UInventoryKitBaseContainerComponent::OnItemRemoved(int32 ItemId)
     if (ItemIds.Contains(ItemId))
     {
         ItemIds.Remove(ItemId);
-        
+        SpaceManager->
         // TODO: 更新当前重量
         
         // 触发背包变更事件
@@ -82,6 +82,11 @@ void UInventoryKitBaseContainerComponent::OnItemRemoved(int32 ItemId)
 const TArray<int32>& UInventoryKitBaseContainerComponent::GetAllItems() const
 {
     return ItemIds;
+}
+
+UContainerSpaceManager* UInventoryKitBaseContainerComponent::GetSpaceManager()
+{
+    return SpaceManager;
 }
 
 bool UInventoryKitBaseContainerComponent::ContainsItem(int32 ItemId) const

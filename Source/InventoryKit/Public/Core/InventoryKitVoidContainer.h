@@ -34,6 +34,7 @@ public:
 	virtual void OnItemAdded(int32 ItemId) override;
 	virtual void OnItemRemoved(int32 ItemId) override;
 	virtual const TArray<int32>& GetAllItems() const override;
+	virtual UContainerSpaceManager* GetSpaceManager() override;
 	//~ End IInventoryKitContainerInterface
 
 	void SetContainerID(int32 NewContainerID)

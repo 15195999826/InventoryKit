@@ -66,5 +66,7 @@ public:
      */
     virtual const TArray<int32>& GetAllItems() const = 0;
 
+    virtual UContainerSpaceManager* GetSpaceManager() = 0;
+
     static UContainerSpaceManager* CreateSpaceManager(UObject* InOuter, const FContainerSpaceConfig& InConfig);
 };

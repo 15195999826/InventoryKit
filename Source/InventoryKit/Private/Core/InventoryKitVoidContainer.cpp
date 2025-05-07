@@ -40,3 +40,8 @@ const TArray<int32>& UInventoryKitVoidContainer::GetAllItems() const
 {
 	return ItemIds;
 }
+
+UContainerSpaceManager* UInventoryKitVoidContainer::GetSpaceManager()
+{
+	return SpaceManager;
+}

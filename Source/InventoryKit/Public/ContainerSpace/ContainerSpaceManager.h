@@ -6,6 +6,7 @@
 #include "Core/InventoryKitTypes.h"
 #include "ContainerSpaceManager.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogInventoryKitSpaceManager, Log, All);
 /**
  * 容器空间管理器基类
  * 负责不同类型容器的槽位管理逻辑
@@ -78,4 +79,6 @@ public:
      */
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category="InventoryKit|ContainerSpace")
     virtual int32 GetSlotIndexByXY(int32 X, int32 Y) const PURE_VIRTUAL(UContainerSpaceManager::GetSlotIndexByXY, return INDEX_NONE;);
+
+    virtual void UpdateSlotState(int32 SlotIndex, uint8 Flag) PURE_VIRTUAL(UContainerSpaceManager::UpdateSlotState, );
 }; 

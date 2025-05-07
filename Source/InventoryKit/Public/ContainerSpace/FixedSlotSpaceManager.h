@@ -21,8 +21,14 @@ private:
     // Index to 槽位
     UPROPERTY()
     TMap<int32, FGameplayTag> IndexToSlotTypeMap;
+    
+    UPROPERTY()
+    TMap<FGameplayTag, int32> SlotTypeToIndexMap;
 
-    // 表示槽位状态
+    /**
+     * 表示槽位状态
+     * 只通过持有者的Add or Remove 函数进行更新
+     */
     UPROPERTY()
     TMap<int32, uint8> SlotFlags;
     
@@ -37,15 +43,10 @@ public:
     virtual void Initialize(const FContainerSpaceConfig& Config) override;
     virtual int32 GetCapacity() const override;
     virtual bool IsValidSlotIndex(int32 SlotIndex) const override;
+    virtual int32 GetSlotIndexByTag(const FGameplayTag& SlotTag) const override;
+    virtual int32 GetSlotIndexByXY(int32 X, int32 Y) const override;
+    virtual void UpdateSlotState(int32 SlotIndex, uint8 Flag) override;
     //~ End UContainerSpaceManager Interface
-    
-    /**
-     * 添加槽位
-     * 
-     * @param SlotType 槽位类型标签
-     * @return 添加的槽位索引
-     */
-    int32 AddSlot(FGameplayTag SlotType);
     
     /**
      * 获取槽位数量
@@ -53,14 +54,6 @@ public:
      * @return 槽位数量
      */
     int32 GetSlotCount() const;
-    
-    /**
-     * 获取槽位类型
-     * 
-     * @param SlotIndex 槽位索引
-     * @return 槽位类型标签
-     */
-    FGameplayTag GetSlotType(int32 SlotIndex) const;
     
     /**
      * 获取槽位中的物品ID

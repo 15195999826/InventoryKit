@@ -39,6 +39,8 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
         return false;
     }
 
+    
+
     // 更新位置
     ItemMap[ItemId].ItemLocation = TargetLocation;
 

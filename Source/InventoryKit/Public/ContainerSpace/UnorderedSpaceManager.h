@@ -33,6 +33,9 @@ public:
     virtual void Initialize(const FContainerSpaceConfig& Config) override;
     virtual int32 GetCapacity() const override;
     virtual bool IsValidSlotIndex(int32 SlotIndex) const override;
+    virtual int32 GetSlotIndexByTag(const FGameplayTag& SlotTag) const override;
+    virtual int32 GetSlotIndexByXY(int32 X, int32 Y) const override;
+    virtual void UpdateSlotState(int32 SlotIndex, uint8 Flag) override;
     //~ End UContainerSpaceManager Interface
     
     /**

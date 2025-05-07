@@ -175,7 +175,7 @@ struct INVENTORYKIT_API FItemBaseInstance
     
     // 物品配置ID（对应数据表中的行名）
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FName ConfigId;
+    FName ConfigRowName;
     
     // 项目可以通过继承此结构体添加自定义属性
     // ...

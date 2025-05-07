@@ -22,8 +22,13 @@ protected:
 	UPROPERTY()
 	TArray<int32> ItemIds;
 
+	// 容器空间管理器
+	UPROPERTY()
+	TObjectPtr<UContainerSpaceManager> SpaceManager;
+	
 public:
 	//~ Begin IInventoryKitContainerInterface
+	virtual void InitContainer() override;
 	virtual const int32 GetContainerID() const override;
 	virtual bool CanAddItem(int32 ItemId) const override;
 	virtual void OnItemAdded(int32 ItemId) override;

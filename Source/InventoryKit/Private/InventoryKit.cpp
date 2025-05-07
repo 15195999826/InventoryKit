@@ -3,7 +3,7 @@
 #include "InventoryKit.h"
 #include "Core/InventoryKitTypes.h"
 #include "Core/InventoryKitItemSystem.h"
-#include "Core/InventoryKitBagComponent.h"
+#include "Core/InventoryKitBaseContainerComponent.h"
 #include "Core/InventoryKitEquipmentComponent.h"
 #include "Core/InventoryKitLootComponent.h"
 #include "Interfaces/ContainerInterfaces.h"

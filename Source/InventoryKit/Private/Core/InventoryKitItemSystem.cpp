@@ -4,17 +4,10 @@
 
 #include "Core/InventoryKitVoidContainer.h"
 
-UInventoryKitItemSystem::UInventoryKitItemSystem()
-    : NextItemID(1)
-{
-}
-
 void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
-    ItemLocationMap.Empty();
     ItemMap.Empty();
-    
     auto NewVoidContainer = NewObject<UInventoryKitVoidContainer>(this);
     VoidContainerID = RegisterContainer(NewVoidContainer);
     NewVoidContainer->SetContainerID(VoidContainerID);
@@ -22,16 +15,15 @@ void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
 
 void UInventoryKitItemSystem::Deinitialize()
 {
-    ItemLocationMap.Empty();
     ItemMap.Empty();
     Super::Deinitialize();
 }
 
 bool UInventoryKitItemSystem::GetItemLocation(int32 ItemId, FItemLocation& OutLocation) const
 {
-    if (const FItemLocation* Location = ItemLocationMap.Find(ItemId))
+    if (const FItemBaseInstance* Location = ItemMap.Find(ItemId))
     {
-        OutLocation = *Location;
+        OutLocation = Location->ItemLocation;
         return true;
     }
     return false;
@@ -48,7 +40,7 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
     }
 
     // 更新位置
-    ItemLocationMap[ItemId] = TargetLocation;
+    ItemMap[ItemId].ItemLocation = TargetLocation;
 
     // 触发位置变更事件
     if (ContainerMap.Contains(CurrentLocation.ContainerID))
@@ -63,7 +55,7 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
     return true;
 }
 
-int32 UInventoryKitItemSystem::CreateItem(FName ConfigId, FItemLocation Location)
+int32 UInventoryKitItemSystem::CreateItem(FName ConfigId, const FItemLocation& Location)
 {
     // 生成新的物品ID
     int32 NewItemId = NextItemID++;
@@ -72,10 +64,10 @@ int32 UInventoryKitItemSystem::CreateItem(FName ConfigId, FItemLocation Location
     FItemBaseInstance NewItem;
     NewItem.ItemId = NewItemId;
     NewItem.ConfigRowName = ConfigId;
+    NewItem.ItemLocation = Location;
 
     // 添加到映射表
     ItemMap.Add(NewItemId, NewItem);
-    ItemLocationMap.Add(NewItemId, Location);
 
     if (ContainerMap.Contains(Location.ContainerID))
     {
@@ -88,9 +80,9 @@ int32 UInventoryKitItemSystem::CreateItem(FName ConfigId, FItemLocation Location
 TArray<int32> UInventoryKitItemSystem::GetItemsInContainer(int32 Identifier) const
 {
     TArray<int32> Result;
-    for (const auto& Pair : ItemLocationMap)
+    for (const auto& Pair : ItemMap)
     {
-        if (Pair.Value.ContainerID == Identifier)
+        if (Pair.Value.ItemLocation.ContainerID == Identifier)
         {
             Result.Add(Pair.Key);
         }
@@ -112,6 +104,7 @@ int32 UInventoryKitItemSystem::RegisterContainer(IInventoryKitContainerInterface
 {
     auto ID = NextContainerID++;
     ContainerMap.Add(ID, InContainer);
+    InContainer->InitContainer();
     return ID;
 }
 

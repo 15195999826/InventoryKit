@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InventoryKitBagComponent.h"
+#include "InventoryKitBaseContainerComponent.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "Core/InventoryKitTypes.h"
 #include "InventoryKitItemSystem.generated.h"
@@ -19,14 +19,9 @@ class INVENTORYKIT_API UInventoryKitItemSystem : public UWorldSubsystem
     GENERATED_BODY()
     
 protected:
-    // 物品位置映射表
-    UPROPERTY()
-    TMap<int32, FItemLocation> ItemLocationMap;
-    
     // 物品实例映射表
     UPROPERTY()
     TMap<int32, FItemBaseInstance> ItemMap;
-
     /**
      * 容器列表， 初始化时， 创建一个虚空容器， 占用第一个ID
      */
@@ -43,9 +38,6 @@ protected:
     int32 NextContainerID = 0;
     
 public:
-    // 构造函数
-    UInventoryKitItemSystem();
-
     // 初始化
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
@@ -71,7 +63,7 @@ public:
      * 基础实现：生成新ID并创建物品实例
      */
     UFUNCTION(BlueprintCallable, Category = "InventoryKit")
-    virtual int32 CreateItem(FName ConfigId, FItemLocation Location);
+    virtual int32 CreateItem(FName ConfigId, const FItemLocation& Location);
 
     /**
      * 查询指定容器中的所有物品

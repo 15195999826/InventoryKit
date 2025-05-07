@@ -3,6 +3,12 @@
 
 #include "Core/InventoryKitVoidContainer.h"
 
+void UInventoryKitVoidContainer::InitContainer()
+{
+	static FContainerSpaceConfig DefaultConfig{};
+	SpaceManager = CreateSpaceManager(this, DefaultConfig);
+}
+
 const int32 UInventoryKitVoidContainer::GetContainerID() const
 {
 	return ID;

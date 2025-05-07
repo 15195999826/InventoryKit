@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Interface.h"
 #include "Core/InventoryKitTypes.h"
+#include "UObject/Interface.h"
 #include "ContainerInterfaces.generated.h"
-
+class UContainerSpaceManager;
 /**
  * 物品容器接口
  * 所有可以存储物品的组件都应该实现此接口
@@ -25,9 +25,11 @@ class INVENTORYKIT_API IInventoryKitContainerInterface
 {
     GENERATED_BODY()
 public:
+    virtual void InitContainer() = 0;
+
     /**
-     * 获取容器位置信息
-     * @return 容器位置结构体
+     * 获取容器唯一ID
+     * @return 容器ID
      */
     virtual const int32 GetContainerID() const = 0;
     
@@ -63,4 +65,6 @@ public:
      * @return 物品ID数组
      */
     virtual const TArray<int32>& GetAllItems() const = 0;
+
+    static UContainerSpaceManager* CreateSpaceManager(UObject* InOuter, const FContainerSpaceConfig& InConfig);
 };

@@ -54,9 +54,10 @@ public:
     //~ Begin IInventoryKitContainerInterface
     virtual void InitContainer() override;
     virtual const int32 GetContainerID() const override;
-    virtual bool CanAddItem(int32 ItemId) const override;
-    virtual void OnItemAdded(int32 ItemId) override;
-    virtual void OnItemRemoved(int32 ItemId) override;
+    virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
+    virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
+    virtual void OnItemAdded(const FItemBaseInstance& InItem) override;
+    virtual void OnItemRemoved(const FItemBaseInstance& InItem) override;
     virtual const TArray<int32>& GetAllItems() const override;
     virtual UContainerSpaceManager* GetSpaceManager() override;
     //~ End IInventoryKitContainerInterface

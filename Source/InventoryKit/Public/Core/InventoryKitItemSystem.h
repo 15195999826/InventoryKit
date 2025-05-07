@@ -8,6 +8,7 @@
 #include "Core/InventoryKitTypes.h"
 #include "InventoryKitItemSystem.generated.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogInventoryKitSystem, Log, All);
 /**
  * 物品系统抽象基类
  * 作为物品管理的核心，负责物品创建、查询、移动和销毁
@@ -25,7 +26,6 @@ protected:
     /**
      * 容器列表， 初始化时， 创建一个虚空容器， 占用第一个ID
      */
-    UPROPERTY()
     TMap<int32, IInventoryKitContainerInterface*> ContainerMap;
     
     // 虚空容器ID, 初始化系统时创建

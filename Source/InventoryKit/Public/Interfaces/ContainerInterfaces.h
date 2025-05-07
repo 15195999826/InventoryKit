@@ -37,26 +37,36 @@ public:
      * 检查容器是否可以添加指定物品
      * 实现此方法可以检查容量、重量、类型限制等
      * 
-     * @param ItemId 要添加的物品ID
+     * @param InItem
+     * @param DstSlotIndex
      * @return 是否可以添加物品
      */
-    virtual bool CanAddItem(int32 ItemId) const = 0;
+    virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const = 0;
+
+    /**
+     * 检查容器是否可以移动指定物品
+     * 
+     * @param InItem 
+     * @param DstSlotIndex 
+     * @return 是否可以移动物品 
+     */
+    virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const = 0;
     
     /**
      * 物品添加通知回调
      * 当物品系统将物品添加到此容器时会调用此方法
      * 
-     * @param ItemId 添加的物品ID
+     * @param InItem
      */
-    virtual void OnItemAdded(int32 ItemId) = 0;
+    virtual void OnItemAdded(const FItemBaseInstance& InItem) = 0;
     
     /**
      * 物品移除通知回调
      * 当物品系统从此容器移除物品时会调用此方法
      * 
-     * @param ItemId 移除的物品ID
+     * @param InItem
      */
-    virtual void OnItemRemoved(int32 ItemId) = 0;
+    virtual void OnItemRemoved(const FItemBaseInstance& InItem) = 0;
     
     /**
      * 获取容器中所有物品ID

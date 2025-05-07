@@ -4,8 +4,6 @@
 #include "Core/InventoryKitTypes.h"
 #include "Core/InventoryKitItemSystem.h"
 #include "Core/InventoryKitBaseContainerComponent.h"
-#include "Core/InventoryKitEquipmentComponent.h"
-#include "Core/InventoryKitLootComponent.h"
 #include "Interfaces/ContainerInterfaces.h"
 
 #define LOCTEXT_NAMESPACE "FInventoryKitModule"

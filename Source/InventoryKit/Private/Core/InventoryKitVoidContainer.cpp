@@ -14,25 +14,30 @@ const int32 UInventoryKitVoidContainer::GetContainerID() const
 	return ID;
 }
 
-bool UInventoryKitVoidContainer::CanAddItem(int32 ItemId) const
+bool UInventoryKitVoidContainer::CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const
 {
 	return true;
 }
 
-void UInventoryKitVoidContainer::OnItemAdded(int32 ItemId)
+bool UInventoryKitVoidContainer::CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const
+{
+	return true;
+}
+
+void UInventoryKitVoidContainer::OnItemAdded(const FItemBaseInstance& InItem)
 {
 	// 如果物品已经在背包中，不重复添加
-	if (!ItemIds.Contains(ItemId))
+	if (!ItemIds.Contains(InItem.ItemId))
 	{
-		ItemIds.Add(ItemId);
+		ItemIds.Add(InItem.ItemId);
 	}
 }
 
-void UInventoryKitVoidContainer::OnItemRemoved(int32 ItemId)
+void UInventoryKitVoidContainer::OnItemRemoved(const FItemBaseInstance& InItem)
 {
-	if (ItemIds.Contains(ItemId))
+	if (ItemIds.Contains(InItem.ItemId))
 	{
-		ItemIds.Remove(ItemId);
+		ItemIds.Remove(InItem.ItemId);
 	}
 }
 

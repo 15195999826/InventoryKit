@@ -6,7 +6,7 @@
 #include "Core/InventoryKitTypes.h"
 #include "ContainerSpaceManager.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogInventoryKitSpaceManager, Log, All);
+DEFINE_LOG_CATEGORY_STATIC(LogInventoryKitSpaceManager, Log, All);
 /**
  * 容器空间管理器基类
  * 负责不同类型容器的槽位管理逻辑

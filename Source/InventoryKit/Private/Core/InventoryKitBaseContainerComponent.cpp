@@ -39,10 +39,16 @@ const int32 UInventoryKitBaseContainerComponent::GetContainerID() const
     return ID;
 }
 
-bool UInventoryKitBaseContainerComponent::CanAddItem(int32 ItemId) const
+bool UInventoryKitBaseContainerComponent::CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const
 {
     // 检查容量限制
     if (ItemIds.Num() >= SpaceManager->GetCapacity())
+    {
+        return false;
+    }
+
+    // 检查槽位是否可用
+    if (!SpaceManager->IsSlotAvailable(DstSlotIndex))
     {
         return false;
     }
@@ -52,13 +58,26 @@ bool UInventoryKitBaseContainerComponent::CanAddItem(int32 ItemId) const
     return true;
 }
 
-void UInventoryKitBaseContainerComponent::OnItemAdded(int32 ItemId)
+bool UInventoryKitBaseContainerComponent::CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const
+{
+    // 检查槽位是否可用
+    if (!SpaceManager->IsSlotAvailable(DstSlotIndex))
+    {
+        return false;
+    }
+
+    // 项目实际使用如果需要判断堆叠等情况， 继承当前组件，然后重写这个方法
+
+    return true;
+}
+
+void UInventoryKitBaseContainerComponent::OnItemAdded(const FItemBaseInstance& InItem)
 {
     // 如果物品已经在背包中，不重复添加
-    if (!ItemIds.Contains(ItemId))
+    if (!ItemIds.Contains(InItem.ItemId))
     {
-        ItemIds.Add(ItemId);
-        
+        ItemIds.Add(InItem.ItemId);
+        SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 1);
         // TODO: 更新当前重量
         
         // 触发背包变更事件
@@ -66,12 +85,12 @@ void UInventoryKitBaseContainerComponent::OnItemAdded(int32 ItemId)
     }
 }
 
-void UInventoryKitBaseContainerComponent::OnItemRemoved(int32 ItemId)
+void UInventoryKitBaseContainerComponent::OnItemRemoved(const FItemBaseInstance& InItem)
 {
-    if (ItemIds.Contains(ItemId))
+    if (ItemIds.Contains(InItem.ItemId))
     {
-        ItemIds.Remove(ItemId);
-        SpaceManager->
+        ItemIds.Remove(InItem.ItemId);
+        SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 0);
         // TODO: 更新当前重量
         
         // 触发背包变更事件

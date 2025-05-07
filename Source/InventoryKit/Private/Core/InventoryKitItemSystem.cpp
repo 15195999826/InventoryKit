@@ -4,6 +4,7 @@
 
 #include "Core/InventoryKitVoidContainer.h"
 
+
 void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
@@ -16,6 +17,7 @@ void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
 void UInventoryKitItemSystem::Deinitialize()
 {
     ItemMap.Empty();
+    ContainerMap.Empty();
     Super::Deinitialize();
 }
 
@@ -31,29 +33,43 @@ bool UInventoryKitItemSystem::GetItemLocation(int32 ItemId, FItemLocation& OutLo
 
 bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& TargetLocation)
 {
-    // 验证物品当前位置
-    FItemLocation CurrentLocation;
-    if (!GetItemLocation(ItemId, CurrentLocation))
+    if (!ItemMap.Contains(ItemId))
     {
-        UE_LOG(LogTemp, Error, TEXT("Item %d not found!"), ItemId);
+        UE_LOG(LogInventoryKitSystem, Error, TEXT("Item %d not found!"), ItemId);
+        return false;
+    }
+    
+    // 验证物品当前位置
+    FItemBaseInstance CopyOldItem = ItemMap[ItemId];
+    if (!ContainerMap.Contains(TargetLocation.ContainerID))
+    {
+        UE_LOG(LogInventoryKitSystem, Error, TEXT("Target container %d not found!"), TargetLocation.ContainerID);
+        return false;
+    }
+    
+    auto TargetContainer = ContainerMap[TargetLocation.ContainerID];
+    if (CopyOldItem.ItemLocation.ContainerID != TargetLocation.ContainerID && !TargetContainer->CanAddItem(CopyOldItem, TargetLocation.SlotIndex))
+    {
+        UE_LOG(LogInventoryKitSystem, Warning, TEXT("Cannot move item %d to container %d!"), ItemId, TargetLocation.ContainerID);
         return false;
     }
 
+    if (CopyOldItem.ItemLocation.ContainerID == TargetLocation.ContainerID && !TargetContainer->CanMoveItem(CopyOldItem, TargetLocation.SlotIndex))
+    {
+        UE_LOG(LogInventoryKitSystem, Warning, TEXT("Cannot move item %d to container %d!"), ItemId, TargetLocation.ContainerID);
+        return false;
+    }
     
-
     // 更新位置
     ItemMap[ItemId].ItemLocation = TargetLocation;
 
     // 触发位置变更事件
-    if (ContainerMap.Contains(CurrentLocation.ContainerID))
+    if (ContainerMap.Contains(CopyOldItem.ItemLocation.ContainerID))
     {
-        ContainerMap[CurrentLocation.ContainerID]->OnItemRemoved(ItemId);
+        ContainerMap[CopyOldItem.ItemLocation.ContainerID]->OnItemRemoved(CopyOldItem);
     }
 
-    if (ContainerMap.Contains(TargetLocation.ContainerID))
-    {
-        ContainerMap[TargetLocation.ContainerID]->OnItemAdded(ItemId);
-    }
+    TargetContainer->OnItemAdded(ItemMap[ItemId]);
     return true;
 }
 
@@ -73,7 +89,7 @@ int32 UInventoryKitItemSystem::CreateItem(FName ConfigId, const FItemLocation& L
 
     if (ContainerMap.Contains(Location.ContainerID))
     {
-        ContainerMap[Location.ContainerID]->OnItemAdded(NewItemId);
+        ContainerMap[Location.ContainerID]->OnItemAdded(NewItem);
     }
 
     return NewItemId;

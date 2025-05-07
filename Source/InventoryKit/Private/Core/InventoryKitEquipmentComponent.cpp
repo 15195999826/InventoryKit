@@ -46,7 +46,7 @@ void UInventoryKitEquipmentComponent::BeginPlay()
 
 const FContainerIdentifier& UInventoryKitEquipmentComponent::GetContainerID() const
 {
-    return Identifier;
+    return ID;
 }
 
 bool UInventoryKitEquipmentComponent::CanAddItem(int32 ItemId) const

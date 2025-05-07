@@ -71,7 +71,7 @@ protected:
     
     // 掉落容器唯一ID
     UPROPERTY(EditAnywhere, Category = "InventoryKit")
-    FContainerIdentifier Identifier;
+    int32 ID;
     
     // 预定义的掉落物品列表
     UPROPERTY(EditAnywhere, Category = "InventoryKit")
@@ -87,7 +87,7 @@ protected:
 
 public:
     //~ Begin IInventoryKitContainerInterface
-    virtual const FContainerIdentifier& GetContainerID() const override;
+    virtual const int32 GetContainerID() const override;
     virtual bool CanAddItem(int32 ItemId) const override;
     virtual void OnItemAdded(int32 ItemId) override;
     virtual void OnItemRemoved(int32 ItemId) override;

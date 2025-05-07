@@ -31,7 +31,7 @@ protected:
     
     // 装备组件唯一ID
     UPROPERTY(EditAnywhere, Category = "InventoryKit")
-    FContainerIdentifier Identifier;
+    int32 ID;
     
     // 装备槽数组
     UPROPERTY(EditAnywhere, Category = "InventoryKit")
@@ -43,7 +43,7 @@ protected:
 
 public:
     //~ Begin IInventoryKitContainerInterface
-    virtual const FContainerIdentifier& GetContainerID() const override;
+    virtual const int32 GetContainerID() const override;
     virtual bool CanAddItem(int32 ItemId) const override;
     virtual void OnItemAdded(int32 ItemId) override;
     virtual void OnItemRemoved(int32 ItemId) override;

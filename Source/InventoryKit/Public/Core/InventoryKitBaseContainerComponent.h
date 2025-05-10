@@ -35,7 +35,7 @@ protected:
     virtual void BeginPlay() override;
     
     // 背包唯一标识
-    UPROPERTY(EditAnywhere, Category = "InventoryKit")
+    UPROPERTY(BlueprintReadOnly, Category = "InventoryKit")
     int32 ID;
     
     // 物品ID缓存
@@ -52,7 +52,7 @@ protected:
 
 public:
     //~ Begin IInventoryKitContainerInterface
-    virtual void InitContainer() override;
+    virtual void InitContainer(int32 InContainerID) override;
     virtual const int32 GetContainerID() const override;
     virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
     virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;

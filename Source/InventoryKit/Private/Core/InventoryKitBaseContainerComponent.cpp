@@ -21,7 +21,7 @@ void UInventoryKitBaseContainerComponent::BeginPlay()
     if (UInventoryKitItemSystem* ItemSystem = GetWorld()->GetSubsystem<UInventoryKitItemSystem>())
     {
         // 注册容器
-        ID = ItemSystem->RegisterContainer(this);
+        ItemSystem->RegisterContainer(this);
     }
     else
     {
@@ -29,8 +29,10 @@ void UInventoryKitBaseContainerComponent::BeginPlay()
     }
 }
 
-void UInventoryKitBaseContainerComponent::InitContainer()
+void UInventoryKitBaseContainerComponent::InitContainer(int32 InContainerID)
 {
+    ID = InContainerID;
+    
     SpaceManager = CreateSpaceManager(this, SpaceConfig);
 }
 

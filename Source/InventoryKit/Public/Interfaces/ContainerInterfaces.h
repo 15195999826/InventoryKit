@@ -25,7 +25,7 @@ class INVENTORYKIT_API IInventoryKitContainerInterface
 {
     GENERATED_BODY()
 public:
-    virtual void InitContainer() = 0;
+    virtual void InitContainer(int32 InContainerID) = 0;
 
     /**
      * 获取容器唯一ID

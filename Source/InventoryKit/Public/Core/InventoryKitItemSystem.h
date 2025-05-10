@@ -82,9 +82,8 @@ public:
     /**
      * 注册容器
      * @param InContainer 
-     * @return 
      */
-    int32 RegisterContainer(IInventoryKitContainerInterface* InContainer);
+    void RegisterContainer(IInventoryKitContainerInterface* InContainer);
 
     /**
      * 注销容器

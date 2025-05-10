@@ -87,4 +87,6 @@ public:
      * @return 槽位索引，如果未找到则返回-1
      */
     int32 GetSlotIndexByType(FGameplayTag SlotType) const;
+
+    FGameplayTag GetSlotTypeByIndex(int32 SlotIndex) const;
 }; 

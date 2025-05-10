@@ -10,8 +10,8 @@ void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
     Super::Initialize(Collection);
     ItemMap.Empty();
     auto NewVoidContainer = NewObject<UInventoryKitVoidContainer>(this);
-    VoidContainerID = RegisterContainer(NewVoidContainer);
-    NewVoidContainer->SetContainerID(VoidContainerID);
+    RegisterContainer(NewVoidContainer);
+    VoidContainerID = NewVoidContainer->GetContainerID();
 }
 
 void UInventoryKitItemSystem::Deinitialize()
@@ -118,12 +118,11 @@ FItemBaseInstance UInventoryKitItemSystem::GetItemData(int32 ItemId) const
     return FItemBaseInstance();
 }
 
-int32 UInventoryKitItemSystem::RegisterContainer(IInventoryKitContainerInterface* InContainer)
+void UInventoryKitItemSystem::RegisterContainer(IInventoryKitContainerInterface* InContainer)
 {
     auto ID = NextContainerID++;
     ContainerMap.Add(ID, InContainer);
-    InContainer->InitContainer();
-    return ID;
+    InContainer->InitContainer(ID);
 }
 
 void UInventoryKitItemSystem::UnregisterContainer(IInventoryKitContainerInterface* InContainer)

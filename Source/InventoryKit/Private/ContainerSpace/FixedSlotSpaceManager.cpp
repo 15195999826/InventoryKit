@@ -145,6 +145,18 @@ int32 UFixedSlotSpaceManager::GetSlotIndexByType(FGameplayTag SlotType) const
     return INDEX_NONE;
 }
 
+FGameplayTag UFixedSlotSpaceManager::GetSlotTypeByIndex(int32 SlotIndex) const
+{
+    if (IndexToSlotTypeMap.Contains(SlotIndex))
+    {
+        return IndexToSlotTypeMap[SlotIndex];
+    }
+    
+    // 没有找到匹配的槽位
+    UE_LOG(LogInventoryKitSpaceManager, Error, TEXT("GetSlotTypeByIndex: Slot index %d not found."), SlotIndex);
+    return FGameplayTag();
+}
+
 int32 UFixedSlotSpaceManager::GetSlotIndexByTag(const FGameplayTag& SlotTag) const
 {
     // 调用已有的方法查找槽位

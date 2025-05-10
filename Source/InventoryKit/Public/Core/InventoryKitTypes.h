@@ -31,10 +31,10 @@ struct INVENTORYKIT_API FContainerSpaceConfig
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryKit")
     EContainerSpaceType SpaceType;
     
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryKit|Unordered")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryKit|Unordered", meta=(EditCondition = "SpaceType == EContainerSpaceType::Unordered", EditConditionHides))
     int32 Capacity;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryKit|Grid", meta = (EditCondition = "SpaceType == EContainerSpaceType::Fixed", EditConditionHides))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryKit|Fixed", meta = (EditCondition = "SpaceType == EContainerSpaceType::Fixed", EditConditionHides))
     TArray<FGameplayTag> FixedSlotTypes;
     
     // 网格容器配置: 网格宽度
@@ -84,6 +84,11 @@ struct INVENTORYKIT_API FItemLocation
     // 构造函数
     FItemLocation()
         : ContainerID(0), SlotIndex(-1)
+    {
+    }
+
+    FItemLocation(int32 InContainerID, int32 InSlotIndex)
+        : ContainerID(InContainerID), SlotIndex(InSlotIndex)
     {
     }
 

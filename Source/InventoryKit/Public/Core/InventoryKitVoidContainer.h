@@ -28,7 +28,7 @@ protected:
 	
 public:
 	//~ Begin IInventoryKitContainerInterface
-	virtual void InitContainer() override;
+	virtual void InitContainer(int32 InContainerID) override;
 	virtual const int32 GetContainerID() const override;
 	virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
 	virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
@@ -37,9 +37,4 @@ public:
 	virtual const TArray<int32>& GetAllItems() const override;
 	virtual UContainerSpaceManager* GetSpaceManager() override;
 	//~ End IInventoryKitContainerInterface
-
-	void SetContainerID(int32 NewContainerID)
-	{
-		ID = NewContainerID;
-	}
 };

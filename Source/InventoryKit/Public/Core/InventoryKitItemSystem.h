@@ -90,4 +90,9 @@ public:
      * @param InContainer 
      */
     void UnregisterContainer(IInventoryKitContainerInterface* InContainer);
+
+    int32 GetVoidContainerID() const
+    {
+        return VoidContainerID;
+    }
 }; 

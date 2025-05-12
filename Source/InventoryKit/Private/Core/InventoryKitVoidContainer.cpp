@@ -8,8 +8,6 @@ void UInventoryKitVoidContainer::InitContainer(int32 InContainerID)
 	ID = InContainerID;
 	static FContainerSpaceConfig DefaultConfig{};
 	SpaceManager = CreateSpaceManager(this, DefaultConfig);
-	
-	UE_LOG(LogTemp, Warning, TEXT("虚空容器ID为: %d"), ID);
 }
 
 const int32 UInventoryKitVoidContainer::GetContainerID() const

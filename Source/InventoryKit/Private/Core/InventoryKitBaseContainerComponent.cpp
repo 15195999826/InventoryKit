@@ -41,7 +41,7 @@ const int32 UInventoryKitBaseContainerComponent::GetContainerID() const
     return ID;
 }
 
-bool UInventoryKitBaseContainerComponent::CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const
+bool UInventoryKitBaseContainerComponent::CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex)
 {
     // 检查容量限制
     if (ItemIds.Num() >= SpaceManager->GetCapacity())
@@ -60,7 +60,7 @@ bool UInventoryKitBaseContainerComponent::CanAddItem(const FItemBaseInstance& In
     return true;
 }
 
-bool UInventoryKitBaseContainerComponent::CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const
+bool UInventoryKitBaseContainerComponent::CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex)
 {
     // 检查槽位是否可用
     if (!SpaceManager->IsSlotAvailable(DstSlotIndex))
@@ -76,27 +76,27 @@ bool UInventoryKitBaseContainerComponent::CanMoveItem(const FItemBaseInstance& I
 void UInventoryKitBaseContainerComponent::OnItemAdded(const FItemBaseInstance& InItem)
 {
     // 如果物品已经在背包中，不重复添加
-    if (!ItemIds.Contains(InItem.ItemId))
+    if (!ItemIds.Contains(InItem.ItemID))
     {
-        ItemIds.Add(InItem.ItemId);
+        ItemIds.Add(InItem.ItemID);
         SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 1);
         // TODO: 更新当前重量
-        
-        // 触发背包变更事件
-        OnContainerChanged.Broadcast();
     }
+}
+
+void UInventoryKitBaseContainerComponent::OnItemMoved(const FItemLocation& OldLocation, const FItemBaseInstance& InItem)
+{
+    SpaceManager->UpdateSlotState(OldLocation.SlotIndex, 0);
+    SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 1);
 }
 
 void UInventoryKitBaseContainerComponent::OnItemRemoved(const FItemBaseInstance& InItem)
 {
-    if (ItemIds.Contains(InItem.ItemId))
+    if (ItemIds.Contains(InItem.ItemID))
     {
-        ItemIds.Remove(InItem.ItemId);
+        ItemIds.Remove(InItem.ItemID);
         SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 0);
         // TODO: 更新当前重量
-        
-        // 触发背包变更事件
-        OnContainerChanged.Broadcast();
     }
 }
 

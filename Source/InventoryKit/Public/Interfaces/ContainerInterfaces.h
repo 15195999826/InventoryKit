@@ -41,7 +41,7 @@ public:
      * @param DstSlotIndex
      * @return 是否可以添加物品
      */
-    virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const = 0;
+    virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) = 0;
 
     /**
      * 检查容器是否可以移动指定物品
@@ -50,7 +50,7 @@ public:
      * @param DstSlotIndex 
      * @return 是否可以移动物品 
      */
-    virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const = 0;
+    virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) = 0;
     
     /**
      * 物品添加通知回调
@@ -59,6 +59,15 @@ public:
      * @param InItem
      */
     virtual void OnItemAdded(const FItemBaseInstance& InItem) = 0;
+    
+    /**
+     * 物品移动通知回调
+     * 当物品系统将在同一容器内移动物品时会调用此方法
+     * 
+     * @param OldLocation
+     * @param InItem
+     */
+    virtual void OnItemMoved(const FItemLocation& OldLocation, const FItemBaseInstance& InItem) = 0;
     
     /**
      * 物品移除通知回调

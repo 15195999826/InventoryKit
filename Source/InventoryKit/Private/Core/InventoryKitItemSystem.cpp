@@ -54,7 +54,9 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
         return false;
     }
 
-    if (CopyOldItem.ItemLocation.ContainerID == TargetLocation.ContainerID && !TargetContainer->CanMoveItem(CopyOldItem, TargetLocation.SlotIndex))
+
+    bool IsSameContainer = CopyOldItem.ItemLocation.ContainerID == TargetLocation.ContainerID;
+    if (IsSameContainer && !TargetContainer->CanMoveItem(CopyOldItem, TargetLocation.SlotIndex))
     {
         UE_LOG(LogInventoryKitSystem, Warning, TEXT("Cannot move item %d to container %d!"), ItemId, TargetLocation.ContainerID);
         return false;
@@ -63,25 +65,33 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
     // 更新位置
     ItemMap[ItemId].ItemLocation = TargetLocation;
 
-    // 触发位置变更事件
-    if (ContainerMap.Contains(CopyOldItem.ItemLocation.ContainerID))
-    {
-        ContainerMap[CopyOldItem.ItemLocation.ContainerID]->OnItemRemoved(CopyOldItem);
-    }
 
-    TargetContainer->OnItemAdded(ItemMap[ItemId]);
+    if (IsSameContainer)
+    {
+        TargetContainer->OnItemMoved(CopyOldItem.ItemLocation, ItemMap[ItemId]);
+    }
+    else
+    {
+        // 触发位置变更事件
+        if (ContainerMap.Contains(CopyOldItem.ItemLocation.ContainerID))
+        {
+            ContainerMap[CopyOldItem.ItemLocation.ContainerID]->OnItemRemoved(CopyOldItem);
+        }
+
+        TargetContainer->OnItemAdded(ItemMap[ItemId]);
+    }
+    
     return true;
 }
 
-int32 UInventoryKitItemSystem::CreateItem(FName ConfigId, const FItemLocation& Location)
+int32 UInventoryKitItemSystem::IntervalCreateItem(const FItemLocation& Location)
 {
     // 生成新的物品ID
     int32 NewItemId = NextItemID++;
 
     // 创建物品实例
     FItemBaseInstance NewItem;
-    NewItem.ItemId = NewItemId;
-    NewItem.ConfigRowName = ConfigId;
+    NewItem.ItemID = NewItemId;
     NewItem.ItemLocation = Location;
 
     // 添加到映射表

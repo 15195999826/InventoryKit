@@ -57,13 +57,7 @@ public:
      */
     UFUNCTION(BlueprintCallable, Category = "InventoryKit")
     virtual bool MoveItem(int32 ItemId, const FItemLocation& TargetLocation);
-
-    /**
-     * 创建物品
-     * 基础实现：生成新ID并创建物品实例
-     */
-    UFUNCTION(BlueprintCallable, Category = "InventoryKit")
-    virtual int32 CreateItem(FName ConfigId, const FItemLocation& Location);
+    
 
     /**
      * 查询指定容器中的所有物品
@@ -95,4 +89,11 @@ public:
     {
         return VoidContainerID;
     }
+
+protected:
+    /**
+     * 创建物品
+     * 基础实现：生成新ID并创建物品实例
+     */
+    virtual int32 IntervalCreateItem(const FItemLocation& Location);
 }; 

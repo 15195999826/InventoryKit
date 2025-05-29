@@ -69,7 +69,7 @@ public:
      * @return 
      */
      UFUNCTION(BlueprintCallable, BlueprintPure, Category="InventoryKit|ContainerSpace")
-    virtual int32 GetSlotIndexByTag(const FGameplayTag& SlotTag) const PURE_VIRTUAL(UContainerSpaceManager::GetSlotIndexByTag, return INDEX_NONE;);
+     virtual int32 GetSlotIndexByTag(const FGameplayTag& SlotTag) const PURE_VIRTUAL(UContainerSpaceManager::GetSlotIndexByTag, return INDEX_NONE;);
 
     /**
      * 根据坐标获取槽位索引

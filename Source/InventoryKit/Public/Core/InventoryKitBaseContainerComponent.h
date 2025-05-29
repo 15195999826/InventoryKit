@@ -54,9 +54,10 @@ public:
     //~ Begin IInventoryKitContainerInterface
     virtual void InitContainer(int32 InContainerID) override;
     virtual const int32 GetContainerID() const override;
-    virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
-    virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) const override;
+    virtual bool CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) override;
+    virtual bool CanMoveItem(const FItemBaseInstance& InItem, int32 DstSlotIndex) override;
     virtual void OnItemAdded(const FItemBaseInstance& InItem) override;
+    virtual void OnItemMoved(const FItemLocation& OldLocation, const FItemBaseInstance& InItem) override;
     virtual void OnItemRemoved(const FItemBaseInstance& InItem) override;
     virtual const TArray<int32>& GetAllItems() const override;
     virtual UContainerSpaceManager* GetSpaceManager() override;
@@ -70,8 +71,4 @@ public:
      */
     UFUNCTION(BlueprintCallable, Category = "InventoryKit")
     bool ContainsItem(int32 ItemId) const;
-    
-    // 背包内容变更事件
-    UPROPERTY(BlueprintAssignable, Category = "InventoryKit")
-    FOnContainerChanged OnContainerChanged;
 };

@@ -115,18 +115,14 @@ struct INVENTORYKIT_API FItemBaseInstance
     
     // 物品唯一ID
     UPROPERTY(BlueprintReadOnly)
-    int32 ItemId;
+    int32 ItemID;
     
-    // 物品配置ID（对应数据表中的行名）
-    UPROPERTY(BlueprintReadOnly)
-    FName ConfigRowName;
-
     UPROPERTY(BlueprintReadOnly)
     FItemLocation ItemLocation;
     
     // 基础构造函数
     FItemBaseInstance()
-        : ItemId(-1)
+        : ItemID(-1)
     {
     }
 };

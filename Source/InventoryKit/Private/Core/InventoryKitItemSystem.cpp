@@ -84,7 +84,7 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
     return true;
 }
 
-int32 UInventoryKitItemSystem::IntervalCreateItem(const FItemLocation& Location)
+int32 UInventoryKitItemSystem::IntervalCreateItem(const FItemLocation& Location, bool bNotify)
 {
     // 生成新的物品ID
     int32 NewItemId = NextItemID++;
@@ -97,7 +97,7 @@ int32 UInventoryKitItemSystem::IntervalCreateItem(const FItemLocation& Location)
     // 添加到映射表
     ItemMap.Add(NewItemId, NewItem);
 
-    if (ContainerMap.Contains(Location.ContainerID))
+    if (bNotify && ContainerMap.Contains(Location.ContainerID))
     {
         ContainerMap[Location.ContainerID]->OnItemAdded(NewItem);
     }

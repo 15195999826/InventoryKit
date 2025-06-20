@@ -95,5 +95,5 @@ protected:
      * 创建物品
      * 基础实现：生成新ID并创建物品实例
      */
-    virtual int32 IntervalCreateItem(const FItemLocation& Location);
+    virtual int32 IntervalCreateItem(const FItemLocation& Location, bool bNotify = true);
 }; 

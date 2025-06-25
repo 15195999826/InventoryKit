@@ -9,9 +9,9 @@ void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
     ItemMap.Empty();
-    auto NewVoidContainer = NewObject<UInventoryKitVoidContainer>(this);
-    RegisterContainer(NewVoidContainer);
-    VoidContainerID = NewVoidContainer->GetContainerID();
+    VoidContainer = NewObject<UInventoryKitVoidContainer>(this);
+    RegisterContainer(VoidContainer);
+    VoidContainerID = VoidContainer->GetContainerID();
 }
 
 void UInventoryKitItemSystem::Deinitialize()

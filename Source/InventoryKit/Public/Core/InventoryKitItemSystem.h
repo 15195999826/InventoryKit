@@ -8,6 +8,7 @@
 #include "Core/InventoryKitTypes.h"
 #include "InventoryKitItemSystem.generated.h"
 
+class UInventoryKitVoidContainer;
 DEFINE_LOG_CATEGORY_STATIC(LogInventoryKitSystem, Log, All);
 /**
  * 物品系统抽象基类
@@ -96,4 +97,9 @@ protected:
      * 基础实现：生成新ID并创建物品实例
      */
     virtual int32 IntervalCreateItem(const FItemLocation& Location, bool bNotify = true);
+
+private:
+    // 防止GC
+    UPROPERTY()
+    TObjectPtr<UInventoryKitVoidContainer> VoidContainer;
 }; 

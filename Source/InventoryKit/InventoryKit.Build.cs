@@ -37,7 +37,7 @@ public class InventoryKit : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore",
+				"SlateCore", "DESKTK",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

@@ -2,7 +2,9 @@
 
 #include "Core/InventoryKitItemSystem.h"
 
+#include "ContainerSpace/ContainerSpaceManager.h"
 #include "Core/InventoryKitVoidContainer.h"
+#include "Game/System/DESKTKContextSystem.h"
 
 
 void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -53,8 +55,7 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
         UE_LOG(LogInventoryKitSystem, Warning, TEXT("Cannot move item %d to container %d!"), ItemId, TargetLocation.ContainerID);
         return false;
     }
-
-
+    
     bool IsSameContainer = CopyOldItem.ItemLocation.ContainerID == TargetLocation.ContainerID;
     if (IsSameContainer && !TargetContainer->CanMoveItem(CopyOldItem, TargetLocation.SlotIndex))
     {
@@ -64,20 +65,17 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
     
     // 更新位置
     ItemMap[ItemId].ItemLocation = TargetLocation;
-
-
+    
     if (IsSameContainer)
     {
         TargetContainer->OnItemMoved(CopyOldItem.ItemLocation, ItemMap[ItemId]);
     }
     else
     {
-        // 触发位置变更事件
         if (ContainerMap.Contains(CopyOldItem.ItemLocation.ContainerID))
         {
             ContainerMap[CopyOldItem.ItemLocation.ContainerID]->OnItemRemoved(CopyOldItem);
         }
-
         TargetContainer->OnItemAdded(ItemMap[ItemId]);
     }
     
@@ -101,7 +99,7 @@ int32 UInventoryKitItemSystem::IntervalCreateItem(const FItemLocation& Location,
     {
         ContainerMap[Location.ContainerID]->OnItemAdded(NewItem);
     }
-
+    
     return NewItemId;
 }
 

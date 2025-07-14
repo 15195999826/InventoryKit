@@ -68,7 +68,7 @@ public:
      * @param InItem
      */
     virtual void OnItemMoved(const FItemLocation& OldLocation, const FItemBaseInstance& InItem) = 0;
-    
+
     /**
      * 物品移除通知回调
      * 当物品系统从此容器移除物品时会调用此方法

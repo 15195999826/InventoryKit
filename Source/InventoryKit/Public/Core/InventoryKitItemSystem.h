@@ -24,6 +24,7 @@ protected:
     // 物品实例映射表
     UPROPERTY()
     TMap<int32, FItemBaseInstance> ItemMap;
+    
     /**
      * 容器列表， 初始化时， 创建一个虚空容器， 占用第一个ID
      */
@@ -59,7 +60,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "InventoryKit")
     virtual bool MoveItem(int32 ItemId, const FItemLocation& TargetLocation);
     
-
     /**
      * 查询指定容器中的所有物品
      * 基础实现：遍历位置映射表
@@ -89,6 +89,11 @@ public:
     int32 GetVoidContainerID() const
     {
         return VoidContainerID;
+    }
+
+    const TMap<int32, IInventoryKitContainerInterface*>& GetContainerMap() const
+    {
+        return ContainerMap;
     }
 
 protected:

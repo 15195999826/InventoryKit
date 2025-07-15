@@ -4,7 +4,6 @@
 
 #include "ContainerSpace/ContainerSpaceManager.h"
 #include "Core/InventoryKitVoidContainer.h"
-#include "Game/System/DESKTKContextSystem.h"
 
 
 void UInventoryKitItemSystem::Initialize(FSubsystemCollectionBase& Collection)

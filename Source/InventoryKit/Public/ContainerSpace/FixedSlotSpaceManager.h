@@ -61,24 +61,7 @@ public:
      * @param SlotIndex 槽位索引
      * @return 物品ID，如果槽位为空则返回-1
      */
-    int32 GetItemAtSlot(int32 SlotIndex) const;
-    
-    /**
-     * 设置槽位中的物品
-     * 
-     * @param SlotIndex 槽位索引
-     * @param ItemId 物品ID
-     * @return 是否设置成功
-     */
-    bool SetItemAtSlot(int32 SlotIndex, int32 ItemId);
-    
-    /**
-     * 清除槽位中的物品
-     * 
-     * @param SlotIndex 槽位索引
-     * @return 是否清除成功
-     */
-    bool ClearSlot(int32 SlotIndex);
+    bool HasItemAtSlot(int32 SlotIndex) const;
     
     /**
      * 获取指定类型的槽位索引

@@ -44,7 +44,7 @@ const int32 UInventoryKitBaseContainerComponent::GetContainerID() const
 bool UInventoryKitBaseContainerComponent::CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex)
 {
     // 检查容量限制
-    if (ItemIds.Num() >= SpaceManager->GetCapacity())
+    if (ItemIDs.Num() >= SpaceManager->GetCapacity())
     {
         return false;
     }
@@ -76,9 +76,9 @@ bool UInventoryKitBaseContainerComponent::CanMoveItem(const FItemBaseInstance& I
 void UInventoryKitBaseContainerComponent::OnItemAdded(const FItemBaseInstance& InItem)
 {
     // 如果物品已经在背包中，不重复添加
-    if (!ItemIds.Contains(InItem.ItemID))
+    if (!ItemIDs.Contains(InItem.ItemID))
     {
-        ItemIds.Add(InItem.ItemID);
+        ItemIDs.Add(InItem.ItemID);
         SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 1);
         // TODO: 更新当前重量
     }
@@ -92,9 +92,9 @@ void UInventoryKitBaseContainerComponent::OnItemMoved(const FItemLocation& OldLo
 
 void UInventoryKitBaseContainerComponent::OnItemRemoved(const FItemBaseInstance& InItem)
 {
-    if (ItemIds.Contains(InItem.ItemID))
+    if (ItemIDs.Contains(InItem.ItemID))
     {
-        ItemIds.Remove(InItem.ItemID);
+        ItemIDs.Remove(InItem.ItemID);
         SpaceManager->UpdateSlotState(InItem.ItemLocation.SlotIndex, 0);
         // TODO: 更新当前重量
     }
@@ -102,7 +102,7 @@ void UInventoryKitBaseContainerComponent::OnItemRemoved(const FItemBaseInstance&
 
 const TArray<int32>& UInventoryKitBaseContainerComponent::GetAllItems() const
 {
-    return ItemIds;
+    return ItemIDs;
 }
 
 UContainerSpaceManager* UInventoryKitBaseContainerComponent::GetSpaceManager()
@@ -112,5 +112,5 @@ UContainerSpaceManager* UInventoryKitBaseContainerComponent::GetSpaceManager()
 
 bool UInventoryKitBaseContainerComponent::ContainsItem(int32 ItemId) const
 {
-    return ItemIds.Contains(ItemId);
+    return ItemIDs.Contains(ItemId);
 } 

@@ -77,61 +77,18 @@ int32 UFixedSlotSpaceManager::GetSlotCount() const
     return SlotTypeToIndexMap.Num();
 }
 
-int32 UFixedSlotSpaceManager::GetItemAtSlot(int32 SlotIndex) const
+bool UFixedSlotSpaceManager::HasItemAtSlot(int32 SlotIndex) const
 {
     const uint8* FlagPtr = SlotFlags.Find(SlotIndex);
     if (FlagPtr && *FlagPtr > 0)
     {
         // 标志大于0表示有物品，返回物品ID
         // 注意：这个实现假设标志值就是物品ID，可能需要根据实际需求修改
-        return static_cast<int32>(*FlagPtr);
+        return static_cast<int32>(*FlagPtr) == 1;
     }
     
     // 槽位为空
-    return -1;
-}
-
-bool UFixedSlotSpaceManager::SetItemAtSlot(int32 SlotIndex, int32 ItemId)
-{
-    // 检查槽位是否有效
-    if (!IsValidSlotIndex(SlotIndex))
-    {
-        return false;
-    }
-    
-    // 检查槽位是否可用
-    if (!IsSlotAvailable(SlotIndex) && ItemId > 0)
-    {
-        return false;
-    }
-    
-    // 设置槽位状态
-    if (ItemId > 0)
-    {
-        // 将物品ID作为标志值保存
-        SlotFlags[SlotIndex] = static_cast<uint8>(ItemId);
-    }
-    else
-    {
-        // 清除槽位
-        SlotFlags[SlotIndex] = 0;
-    }
-    
-    return true;
-}
-
-bool UFixedSlotSpaceManager::ClearSlot(int32 SlotIndex)
-{
-    // 检查槽位是否有效
-    if (!IsValidSlotIndex(SlotIndex))
-    {
-        return false;
-    }
-    
-    // 清除槽位
-    SlotFlags[SlotIndex] = 0;
-    
-    return true;
+    return false;
 }
 
 int32 UFixedSlotSpaceManager::GetSlotIndexByType(FGameplayTag SlotType) const

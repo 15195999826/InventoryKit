@@ -40,7 +40,7 @@ protected:
     
     // 物品ID缓存
     UPROPERTY()
-    TArray<int32> ItemIds;
+    TArray<int32> ItemIDs;
     
     // 容器配置
     UPROPERTY(EditAnywhere, Category = "InventoryKit|Configuration")

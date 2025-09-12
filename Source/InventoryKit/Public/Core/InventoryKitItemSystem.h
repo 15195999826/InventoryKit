@@ -72,7 +72,7 @@ public:
      * 基础实现：直接从映射表中获取
      */
     UFUNCTION(BlueprintCallable, Category = "InventoryKit")
-    virtual FItemBaseInstance GetItemData(int32 ItemId) const;
+    virtual FItemBaseInstance GetItemBaseInstance(int32 ItemId) const;
     
     /**
      * 注册容器

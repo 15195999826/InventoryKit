@@ -115,7 +115,7 @@ TArray<int32> UInventoryKitItemSystem::GetItemsInContainer(int32 Identifier) con
     return Result;
 }
 
-FItemBaseInstance UInventoryKitItemSystem::GetItemData(int32 ItemId) const
+FItemBaseInstance UInventoryKitItemSystem::GetItemBaseInstance(int32 ItemId) const
 {
     if (const FItemBaseInstance* Item = ItemMap.Find(ItemId))
     {

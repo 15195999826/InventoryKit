@@ -24,7 +24,7 @@ protected:
     // 物品实例映射表
     UPROPERTY()
     TMap<int32, FItemBaseInstance> ItemMap;
-    
+     
     /**
      * 容器列表， 初始化时， 创建一个虚空容器， 占用第一个ID
      */

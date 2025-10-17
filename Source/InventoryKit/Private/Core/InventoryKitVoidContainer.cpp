@@ -6,8 +6,7 @@
 void UInventoryKitVoidContainer::InitContainer(int32 InContainerID)
 {
 	ID = InContainerID;
-	static FContainerSpaceConfig DefaultConfig{};
-	SpaceManager = CreateSpaceManager(this, DefaultConfig);
+	SpaceManager = CreateSpaceManager(this, ContainerSpaceConfig);
 }
 
 const int32 UInventoryKitVoidContainer::GetContainerID() const

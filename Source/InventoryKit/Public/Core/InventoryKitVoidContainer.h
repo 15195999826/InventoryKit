@@ -15,6 +15,7 @@ class INVENTORYKIT_API UInventoryKitVoidContainer : public UObject, public IInve
 {
 	GENERATED_BODY()
 
+
 protected:
 	int32 ID = 0; // 容器ID
 
@@ -38,4 +39,13 @@ public:
 	virtual const TArray<int32>& GetAllItems() const override;
 	virtual UContainerSpaceManager* GetSpaceManager() override;
 	//~ End IInventoryKitContainerInterface
+
+	void SetContainerSpaceConfig(const FContainerSpaceConfig& InConfig)
+	{
+		ContainerSpaceConfig = InConfig;
+	}
+	
+private:
+	FContainerSpaceConfig ContainerSpaceConfig;
+	
 };

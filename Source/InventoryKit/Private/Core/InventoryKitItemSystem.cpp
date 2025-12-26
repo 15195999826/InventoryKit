@@ -51,7 +51,7 @@ bool UInventoryKitItemSystem::MoveItem(int32 ItemId, const FItemLocation& Target
     auto TargetContainer = ContainerMap[TargetLocation.ContainerID];
     if (CopyOldItem.ItemLocation.ContainerID != TargetLocation.ContainerID && !TargetContainer->CanAddItem(CopyOldItem, TargetLocation.SlotIndex))
     {
-        UE_LOG(LogInventoryKitSystem, Warning, TEXT("Cannot move item %d to container %d!"), ItemId, TargetLocation.ContainerID);
+        UE_LOG(LogInventoryKitSystem, Warning, TEXT("Cannot add item %d to container %d!"), ItemId, TargetLocation.ContainerID);
         return false;
     }
     

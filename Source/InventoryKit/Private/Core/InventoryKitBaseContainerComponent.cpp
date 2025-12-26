@@ -43,6 +43,11 @@ const int32 UInventoryKitBaseContainerComponent::GetContainerID() const
 
 bool UInventoryKitBaseContainerComponent::CanAddItem(const FItemBaseInstance& InItem, int32 DstSlotIndex)
 {
+    if (SpaceManager->GetCapacity() < 0)
+    {
+        return true;
+    }
+    
     // 检查容量限制
     if (ItemIDs.Num() >= SpaceManager->GetCapacity())
     {
